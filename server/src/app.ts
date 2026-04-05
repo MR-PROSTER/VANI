@@ -1,5 +1,6 @@
 import cors from "cors";
 import express, { type NextFunction, type Request, type Response } from "express";
+import { createServer } from "http";
 
 import { env } from "./config/env";
 import { analyticsRouter } from "./routes/analytics";
@@ -8,8 +9,11 @@ import { healthRouter } from "./routes/health";
 import { searchRouter } from "./routes/search";
 import { sessionsRouter } from "./routes/sessions";
 import { HttpError } from "./lib/http";
+import { setupWebRTCSignaling } from "./lib/webrtc-signaling";
+import { setupAICall } from "./lib/ai-call";
 
 export const app = express();
+export const server = createServer(app);
 
 app.use(
   cors({
@@ -39,6 +43,10 @@ app.use("/api/dashboard", dashboardRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/search", searchRouter);
 app.use("/api/analytics", analyticsRouter);
+
+// Setup AI call and WebRTC signaling (after routes to avoid conflicts)
+setupWebRTCSignaling(server, app);
+setupAICall(server, app);
 
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err);

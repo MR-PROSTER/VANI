@@ -57,6 +57,19 @@ interface RecordingState {
     extraction: ExtractionData;
     updateExtraction: (fields: Partial<ExtractionData>) => void;
     resetExtraction: () => void;
+
+    // WebRTC call state
+    callStatus: 'idle' | 'waiting' | 'connecting' | 'connected' | 'ended';
+    setCallStatus: (status: 'idle' | 'waiting' | 'connecting' | 'connected' | 'ended') => void;
+
+    sessionId: string | null;
+    setSessionId: (id: string | null) => void;
+
+    patientName: string | null;
+    setPatientName: (name: string | null) => void;
+
+    callDuration: number;
+    setCallDuration: (n: number | ((prev: number) => number)) => void;
 }
 
 const defaultExtraction: ExtractionData = {
@@ -94,6 +107,19 @@ const useRecordingStore = create<RecordingState>((set) => ({
             extraction: { ...state.extraction, ...fields },
         })),
     resetExtraction: () => set({ extraction: defaultExtraction }),
+
+    // WebRTC call state
+    callStatus: 'idle',
+    setCallStatus: (status) => set({ callStatus: status }),
+
+    sessionId: null,
+    setSessionId: (id) => set({ sessionId: id }),
+
+    patientName: null,
+    setPatientName: (name) => set({ patientName: name }),
+
+    callDuration: 0,
+    setCallDuration: (n) => set({ callDuration: n }),
 }));
 
  export const useDashboardRangeSelector = create<DashboardRangeSelector>((set)=>({

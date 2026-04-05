@@ -1,6 +1,6 @@
 import { env } from "./config/env";
-import { app } from "./app";
+import { server } from "./app";
 
-app.listen(env.PORT, () => {
+server.listen(env.PORT, () => {
   console.log(`VANI API listening on http://localhost:${env.PORT}`);
 });
