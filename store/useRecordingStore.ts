@@ -70,6 +70,17 @@ interface RecordingState {
 
     callDuration: number;
     setCallDuration: (n: number | ((prev: number) => number)) => void;
+
+    // Domain from home page selection
+    selectedDomain: 'healthcare' | 'finance' | null;
+    setSelectedDomain: (d: 'healthcare' | 'finance' | null) => void;
+
+    // Currently selected patient/customer
+    selectedPatientId: number | null;
+    setSelectedPatientId: (id: number | null) => void;
+
+    selectedPatientName: string | null;
+    setSelectedPatientName: (name: string | null) => void;
 }
 
 const defaultExtraction: ExtractionData = {
@@ -120,6 +131,17 @@ const useRecordingStore = create<RecordingState>((set) => ({
 
     callDuration: 0,
     setCallDuration: (n) => set({ callDuration: n }),
+
+    // Domain selection
+    selectedDomain: null,
+    setSelectedDomain: (d) => set({ selectedDomain: d }),
+
+    // Selected patient/customer
+    selectedPatientId: null,
+    setSelectedPatientId: (id) => set({ selectedPatientId: id }),
+
+    selectedPatientName: null,
+    setSelectedPatientName: (name) => set({ selectedPatientName: name }),
 }));
 
  export const useDashboardRangeSelector = create<DashboardRangeSelector>((set)=>({

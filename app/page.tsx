@@ -1,16 +1,19 @@
-import { prisma } from '@/lib/prisma'
-import { getAllUsers } from '@/lib/services/userprofile.service'
-import React from 'react'
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
+import LandingPage from './(landing)/page'
 
-const page = async () => {
-    const userNames = await getAllUsers();
-    return (<>
-        <div className='text-6xl p-4 font-oxanium'>{userNames.map((user, index) => (
-            <h1 key={index}>{user.name}</h1>
-        ))}</div>
+export default async function Home() {
 
-    </>
-    )
+
+    const cookieStore = await cookies();
+    const selectedDomain = cookieStore.get("selected_domain")?.value;
+
+    // If domain already selected, redirect to home page
+    if (selectedDomain === "healthcare" || selectedDomain === "finance") {
+        redirect("/home");
+    }
+
+    // Otherwise show landing page
+    return <LandingPage />;
 }
-
-export default page

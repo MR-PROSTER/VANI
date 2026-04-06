@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../../generated/prisma";
 
 import { prisma } from "../lib/prisma";
 import { parseDateRangeFilters, toNumber } from "../lib/http";
@@ -40,7 +40,7 @@ analyticsRouter.get("/overview", async (req, res, next) => {
           ORDER BY day DESC
           LIMIT ${days}
         `,
-        prisma.financeReport.groupBy({
+        prisma.financeReports.groupBy({
           by: ["paymentStatus"],
           where: {
             session: where,

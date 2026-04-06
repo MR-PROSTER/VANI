@@ -1,0 +1,22 @@
+{
+  "name": "vani-server",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "*",
+    "express": "*"
+  },
+  "devDependencies": {
+    "ts-node": "*",
+    "typescript": "*",
+    "@types/node": "*",
+    "@types/express": "*",
+    "nodemon": "*",
+    "tsconfig-paths": "*"
+  }
+}

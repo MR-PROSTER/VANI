@@ -1,13 +1,15 @@
 "use client";
 
 import { BriefcaseMedical, ChevronRight, CircleDollarSign, Info } from "lucide-react";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { selectDomain } from "./actions";
 
 type HomePageClientProps = {
   data: Awaited<ReturnType<typeof import("@/lib/services/home.service").getHomePageData>>;
 };
 
 const HomePageClient = ({ data }: HomePageClientProps) => {
+  const [isPending, startTransition] = useTransition();
   const [selected, setSelected] = useState(false);
   const [choice, setChoice] = useState<"healthcare" | "finance" | null>(null);
   const [lang, setLang] = useState<string | null>(null);
@@ -178,14 +180,35 @@ const HomePageClient = ({ data }: HomePageClientProps) => {
                     {data.summary.activeAlerts} open alerts · {data.summary.activePrograms} active programs
                   </h1>
                 </div>
-                <div
-                  className={`flex items-center justify-center w-fit h-fit ${
-                    selected ? "bg-blue-500" : "bg-gray-500"
-                  } transition-all duration-300 p-2 rounded-xl`}
+                <form
+                  action={async () => {
+                    if (selected && choice) {
+                      startTransition(() => {
+                        selectDomain(choice);
+                      });
+                    }
+                  }}
                 >
-                  <h4 className="text-white text-xl font-semibold">Continue</h4>
-                  <ChevronRight size={24} className="text-white" />
-                </div>
+                  <button
+                    type="submit"
+                    className={`flex items-center justify-center w-fit h-fit cursor-pointer ${
+                      selected ? "bg-blue-500" : "bg-gray-500"
+                    } transition-all duration-300 p-2 rounded-xl`}
+                    disabled={!selected || isPending}
+                  >
+                    {isPending ? (
+                      <span className="flex items-center gap-2">
+                        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Loading...
+                      </span>
+                    ) : (
+                      <>
+                        <h4 className="text-white text-xl font-semibold">Continue</h4>
+                        <ChevronRight size={24} className="text-white" />
+                      </>
+                    )}
+                  </button>
+                </form>
               </div>
             </div>
           </div>
