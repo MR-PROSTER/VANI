@@ -5,7 +5,6 @@ import "../globals.css";
 import { cn } from "@/lib/utils";
 import Sidebar from "@/components/common/Siderbar";
 import Navbar from "@/components/common/Navbar";
-import { ClerkProvider } from "@clerk/nextjs";
 import { ToastProvider } from "@/components/ui/toast";
 
 const oxaniumHeading = Oxanium({ subsets: ['latin'], variable: '--font-heading' });
@@ -46,26 +45,18 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <ClerkProvider
-            afterSignOutUrl="/"
-            afterMultiSessionSingleSignOutUrl="/"
-        >
-            <ToastProvider>
-                <html
-                    lang="en"
-                    className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, oxanium.variable, lexend.variable, "font-sans", outfit.variable, oxaniumHeading.variable)}
-                >
-                    <body className="min-h-full flex bg-black">
-                        <div className="h-full w-full flex  bg-black">
-                            <Sidebar />
-                            <div className='flex flex-col w-full h-full'>
-                                <Navbar />
-                                {children}
-                            </div>
-                        </div>
-                    </body>
-                </html>
-            </ToastProvider>
-        </ClerkProvider>
+        <ToastProvider>
+            <div
+                className={cn("min-h-full flex bg-black", "antialiased", geistSans.variable, geistMono.variable, oxanium.variable, lexend.variable, "font-sans", outfit.variable, oxaniumHeading.variable)}
+            >
+                <div className="h-full w-full flex bg-black">
+                    <Sidebar />
+                    <div className='flex flex-col w-full h-full'>
+                        <Navbar />
+                        {children}
+                    </div>
+                </div>
+            </div>
+        </ToastProvider>
     );
 }

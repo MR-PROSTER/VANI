@@ -7,8 +7,10 @@ export default function Page() {
                 routing="path"
                 path="/sign-up"
                 signInUrl="/sign-in"
-                afterSignInUrl="/home"
-                afterSignUpUrl="/home"
+                forceRedirectUrl="/home"
+                fallbackRedirectUrl="/home"
+                signInForceRedirectUrl="/home"
+                signInFallbackRedirectUrl="/home"
                 appearance={{
                     variables: {
                         colorPrimary: "#14b8a6", // green

@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Oxanium, Outfit, Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "../globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import { ToastProvider } from "@/components/ui/toast";
 
 const oxaniumHeading = Oxanium({ subsets: ["latin"], variable: "--font-heading" });
@@ -44,25 +43,22 @@ export default function MinimalLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <ClerkProvider>
-            <ToastProvider>
-                <html
-                    lang="en"
-                    className={cn(
-                        "h-full",
-                        "antialiased",
-                        geistSans.variable,
-                        geistMono.variable,
-                        oxanium.variable,
-                        lexend.variable,
-                        "font-sans",
-                        outfit.variable,
-                        oxaniumHeading.variable
-                    )}
-                >
-                    <body className="min-h-full bg-[#080708]">{children}</body>
-                </html>
-            </ToastProvider>
-        </ClerkProvider>
+        <ToastProvider>
+            <div
+                className={cn(
+                    "min-h-full bg-[#080708]",
+                    "antialiased",
+                    geistSans.variable,
+                    geistMono.variable,
+                    oxanium.variable,
+                    lexend.variable,
+                    "font-sans",
+                    outfit.variable,
+                    oxaniumHeading.variable
+                )}
+            >
+                {children}
+            </div>
+        </ToastProvider>
     );
 }

@@ -18,8 +18,8 @@ export default clerkMiddleware((auth, req) => {
     return NextResponse.redirect(new URL('/sign-in', req.url));
   }
 
-  // 🚫 Prevent signed-in users from seeing sign-in page
-  if (userId && path.startsWith('/sign-in')) {
+  // 🚫 Prevent signed-in users from seeing auth pages
+  if (userId && (path.startsWith('/sign-in') || path.startsWith('/sign-up'))) {
     return NextResponse.redirect(new URL('/home', req.url));
   }
 

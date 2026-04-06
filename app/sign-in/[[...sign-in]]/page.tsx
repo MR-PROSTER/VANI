@@ -7,8 +7,10 @@ export default function Page() {
                 routing="path"
                 path="/sign-in"
                 signUpUrl="/sign-up"
-                afterSignInUrl="/home"
-                afterSignUpUrl="/home"
+                forceRedirectUrl="/home"
+                fallbackRedirectUrl="/home"
+                signUpForceRedirectUrl="/home"
+                signUpFallbackRedirectUrl="/home"
                 appearance={{
                     variables: {
                         colorPrimary: "#14b8a6", // green
@@ -33,5 +35,4 @@ export default function Page() {
         </div>
     );
 }
-
 
